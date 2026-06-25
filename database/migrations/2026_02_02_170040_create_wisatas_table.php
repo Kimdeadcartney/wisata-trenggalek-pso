@@ -19,48 +19,40 @@ return new class extends Migration
             // Nama lokasi wisata / hotel / kuliner
             $table->string('nama');
 
-            // Kategori wisata
-            // Contoh:
-            // Pantai
-            // Alam
-            // Bukit
-            // Gua
-            // Religi
-            // Kuliner
-            // Hotel
-            // Buatan
+            // Kategori wisata (Pantai, Alam, Budaya, dll)
             $table->string('kategori');
 
-            // Harga tiket masuk
-            // Gunakan 0 jika gratis atau hotel
+            // Kecamatan lokasi
+            $table->string('kecamatan');
+
+            // Harga tiket masuk (0 jika gratis)
             $table->decimal('harga_tiket', 12, 2)->default(0);
 
             // Koordinat GPS
-            // Penting untuk maps, jarak, Haversine, PSO
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
 
-            // Jarak referensi dari pusat kota Trenggalek
-            // Satuan KM
+            // Jarak referensi dari pusat kota Trenggalek (KM)
             $table->decimal('jarak_dari_pusat', 8, 2)->nullable();
 
-            // Rating lokasi
-            // Range 1.0 sampai 5.0
+            // Rating lokasi (1.0 - 5.0)
             $table->decimal('rating', 3, 1)->default(0);
 
+            // Jam Operasional (Dibuat string agar bisa fleksibel/kosong)
+            $table->string('jam_buka')->nullable();
+            $table->string('jam_tutup')->nullable();
+
+            // Khusus Wisata Budaya / Event Tahunan
+            $table->string('tanggal_pelaksanaan')->nullable();
+
             // Fasilitas lokasi
-            // Contoh:
-            // parkir, toilet, mushola, restoran, camping
             $table->text('fasilitas')->nullable();
 
-            // Hotel terdekat dari lokasi wisata
-            // Contoh:
-            // Hotel Prigi, Pondok Prigi Cottage
+            // Hotel terdekat
             $table->text('hotel_terdekat')->nullable();
 
             // Foto utama lokasi
-            // Bisa URL atau nama file lokal
-            $table->string('gambar')->nullable();
+            $table->text('gambar')->nullable();
 
             // Penjelasan singkat lokasi wisata
             $table->text('deskripsi')->nullable();

@@ -4,6 +4,9 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Wisata Trenggalek - Jelajahi Pesona Tersembunyi</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -36,63 +39,110 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
         }
+        /* Custom Swiper Style */
+        .swiper-button-next, .swiper-button-prev {
+            background: white;
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50%;
+            color: #135bec !important;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 16px !important;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
     <div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
         
         <header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
-    <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between whitespace-nowrap h-16">
-            <div class="flex items-center gap-4 text-slate-900 dark:text-white">
-                <div class="w-7 h-7 text-primary">
-                    <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
-                    </svg>
-                </div>
-                <h2 class="text-lg font-bold tracking-[-0.015em]">Wisata Trenggalek</h2>
-            </div>
-
-            <div class="hidden md:flex flex-1 justify-end gap-8">
-                <nav class="flex items-center gap-9">
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
-                </nav>
-
-                <div class="flex items-center gap-4">
-                    @auth
-                        <div class="flex items-center gap-4 border-l pl-6 border-slate-200 dark:border-slate-700">
-                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                                {{ Auth::user()->name }}
-                            </span>
-                            
-                            <form action="{{ route('logout') }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="flex items-center justify-center rounded-lg h-10 w-10 text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 transition-colors" title="Logout">
-                                    <span class="material-symbols-outlined">logout</span>
-                                </button>
-                            </form>
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between whitespace-nowrap h-16">
+                    <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+                        <div class="w-7 h-7 text-primary">
+                            <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+                            </svg>
                         </div>
-                    @else
-                        <div class="flex gap-2">
-                            <a href="{{ route('login') }}" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
-                                <span class="truncate">Login</span>
-                            </a>
+                        <h2 class="text-lg font-bold tracking-[-0.015em]">Wisata Trenggalek</h2>
+                    </div>
+
+                    <div class="hidden md:flex flex-1 justify-end gap-8">
+                        <nav class="flex items-center gap-9">
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('about') }}">Tentang</a>
+                        </nav>
+
+                        <div class="flex items-center gap-4">
+                            @auth
+                                <div class="flex items-center gap-4 border-l pl-6 border-slate-200 dark:border-slate-700">
+                                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                                        {{ Auth::user()->name }}
+                                    </span>
+                                    
+                                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="flex items-center justify-center rounded-lg h-10 w-10 text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 transition-colors" title="Logout">
+                                            <span class="material-symbols-outlined">logout</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            @else
+                                <div class="flex gap-2">
+                                    <a href="{{ route('login') }}" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                                        <span class="truncate">Login</span>
+                                    </a>
+                                </div>
+                            @endauth
                         </div>
-                    @endauth
+                    </div>
+
+                   <div class="md:hidden">
+    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+        <span id="mobile-menu-icon" class="material-symbols-outlined text-2xl">menu</span>
+    </button>
+</div>
                 </div>
             </div>
-
-            <div class="md:hidden">
-                <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                    <span class="material-symbols-outlined text-2xl">menu</span>
-                </button>
-            </div>
+        </header>
+<!-- Mobile Menu Dropdown -->
+<div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-lg">
+    <nav class="container mx-auto px-4 py-3 flex flex-col">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">home</span> Home
+        </a>
+        <a href="{{ route('destinasi.index') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">explore</span> Destinasi
+        </a>
+        <a href="{{ route('rekomendasi.pso') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">bolt</span> Rekomendasi Cerdas
+        </a>
+        <a href="{{ route('about') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">info</span> Tentang
+        </a>
+        <div class="pt-3 pb-1">
+            @auth
+                <div class="flex items-center justify-between px-2 py-2">
+                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">{{ Auth::user()->name }}</span>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="flex items-center gap-1 text-red-500 text-sm font-medium">
+                            <span class="material-symbols-outlined text-xl">logout</span> Logout
+                        </button>
+                    </form>
+                </div>
+            @else
+                <a href="{{ route('login') }}" class="flex w-full items-center justify-center rounded-lg h-11 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                    Login
+                </a>
+            @endauth
         </div>
-    </div>
-</header>
-
+    </nav>
+</div>
         <main class="flex-grow">
             <section>
                 <div class="container mx-auto px-4 py-10 md:py-20">
@@ -104,58 +154,56 @@
                                     <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl">Jelajahi Pesona Tersembunyi Trenggalek</h1>
                                     <h2 class="text-white text-sm font-normal leading-normal @[480px]:text-base max-w-2xl mx-auto opacity-90">Temukan keindahan alam, kekayaan budaya, dan pengalaman tak terlupakan yang menanti Anda di setiap sudutnya.</h2>
                                 </div>
-                                <label class="flex flex-col min-w-40 h-14 w-full max-w-[480px] @[480px]:h-16">
+                                
+                                <form action="{{ route('destinasi.index') }}" method="GET" class="flex flex-col min-w-40 h-14 w-full max-w-[480px] @[480px]:h-16">
                                     <div class="flex w-full flex-1 items-stretch rounded-lg h-full shadow-lg">
                                         <div class="text-slate-500 flex bg-white items-center justify-center pl-[15px] rounded-l-lg border-r-0">
                                             <span class="material-symbols-outlined text-2xl">search</span>
                                         </div>
-                                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-slate-900 focus:outline-0 focus:ring-0 border-0 bg-white h-full placeholder:text-slate-500 px-[15px] border-l-0 text-sm font-normal leading-normal @[480px]:text-base" placeholder="Cari pantai, air terjun, atau kuliner..." value=""/>
+                                        <input name="search" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-slate-900 focus:outline-0 focus:ring-0 border-0 bg-white h-full placeholder:text-slate-500 px-[15px] border-l-0 text-sm font-normal leading-normal @[480px]:text-base" placeholder="Cari pantai, air terjun, atau kuliner..." value="{{ request('search') }}"/>
                                         <div class="flex items-center justify-center rounded-r-lg bg-white pr-[7px]">
-                                            <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base hover:bg-primary/90 transition-colors">
+                                            <button type="submit" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base hover:bg-primary/90 transition-colors">
                                                 <span class="truncate">Cari</span>
                                             </button>
                                         </div>
                                     </div>
-                                </label>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="py-10 md:py-16">
-                <div class="container mx-auto px-4">
-                    <h2 class="text-slate-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-5 pt-5 text-center md:text-left">Destinasi Terpopuler di Trenggalek</h2>
+            <section class="py-10 md:py-16 overflow-hidden">
+                <div class="container mx-auto px-4 relative">
+                    <h2 class="text-slate-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-10 pt-5 text-center md:text-left">Destinasi Terpopuler di Trenggalek</h2>
                     
-                    <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-6 p-4">
-                        <div class="flex flex-col gap-3 group cursor-pointer">
-                            <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden transform group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800");'></div>
-                            <div>
-                                <p class="text-slate-900 dark:text-white text-base font-bold leading-normal">Pantai Prigi</p>
-                                <p class="text-slate-600 dark:text-slate-400 text-sm font-normal leading-normal">Pantai</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3 group cursor-pointer">
-                            <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden transform group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://images.unsplash.com/photo-1544945582-3b466d874eac?auto=format&fit=crop&q=80&w=800");'></div>
-                            <div>
-                                <p class="text-slate-900 dark:text-white text-base font-bold leading-normal">Goa Lowo</p>
-                                <p class="text-slate-600 dark:text-slate-400 text-sm font-normal leading-normal">Goa</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3 group cursor-pointer">
-                            <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden transform group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&q=80&w=800");'></div>
-                            <div>
-                                <p class="text-slate-900 dark:text-white text-base font-bold leading-normal">Pantai Karanggongso</p>
-                                <p class="text-slate-600 dark:text-slate-400 text-sm font-normal leading-normal">Pantai</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3 group cursor-pointer">
-                            <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden transform group-hover:scale-105 transition-transform duration-300" style='background-image: url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800");'></div>
-                            <div>
-                                <p class="text-slate-900 dark:text-white text-base font-bold leading-normal">Hutan Mangrove</p>
-                                <p class="text-slate-600 dark:text-slate-400 text-sm font-normal leading-normal">Wisata Alam</p>
-                            </div>
-                        </div>
+                    <div class="swiper mySwiper !px-4">
+                        <div class="swiper-wrapper">
+                       @forelse($wisata as $item)
+    <div class="swiper-slide">
+        <a href="{{ route('destinasi.show', $item->id) }}" class="flex flex-col gap-3 group cursor-pointer">
+            <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl overflow-hidden transform group-hover:scale-105 transition-transform duration-500 shadow-md" 
+                 style="background-image: url('{{ $item->gambar }}');">
+            </div>
+            
+            <div>
+                <p class="text-slate-900 dark:text-white text-base font-bold leading-normal truncate">
+                    {{ $item->nama }}
+                </p>
+                <p class="text-slate-600 dark:text-slate-400 text-sm font-normal leading-normal">
+                    {{ $item->kategori }} • {{ $item->kecamatan }}
+                </p>
+            </div>
+        </a>
+    </div>
+@empty
+    <div class="swiper-slide text-center py-10">
+        <p class="text-slate-500 italic">Data destinasi belum tersedia.</p>
+    </div>
+@endforelse     </div>
+                        
+                        
                     </div>
                 </div>
             </section>
@@ -198,8 +246,8 @@
                         <h4 class="font-bold mb-4">Tautan Cepat</h4>
                         <ul class="space-y-2">
                             <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a></li>
-                            <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomndasi Cerdas</a></li>
-                            <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="#">Tentang</a></li>
+                            <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a></li>
+                            <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('about') }}">Tentang</a></li>
                         </ul>
                     </div>
                     <div>
@@ -229,5 +277,52 @@
             </div>
         </footer>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var swiper = new Swiper(".mySwiper", {
+                slidesPerView: 1.2, // Tampilan mobile (sedikit terpotong agar tahu bisa di-swipe)
+                spaceBetween: 20,
+                centeredSlides: false,
+                loop: true,
+                autoplay: {
+                    delay: 3500,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2.2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                    },
+                    1280: {
+                        slidesPerView: 5,
+                    },
+                },
+            });
+        });
+    </script>
+<script>
+    function toggleMobileMenu() {
+        var menu = document.getElementById('mobile-menu');
+        var icon = document.getElementById('mobile-menu-icon');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            icon.textContent = 'close';
+        } else {
+            menu.classList.add('hidden');
+            icon.textContent = 'menu';
+        }
+    }
+</script>
 </body>
 </html>

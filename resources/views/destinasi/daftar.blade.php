@@ -45,57 +45,58 @@
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
 <div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
 <!-- TopNavBar -->
-  <header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
-    <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between whitespace-nowrap h-16">
-            <div class="flex items-center gap-4 text-slate-900 dark:text-white">
-                <div class="w-7 h-7 text-primary">
-                    <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
-                    </svg>
-                </div>
-                <h2 class="text-lg font-bold tracking-[-0.015em]">Wisata Trenggalek</h2>
-            </div>
-
-            <div class="hidden md:flex flex-1 justify-end gap-8">
-                <nav class="flex items-center gap-9">
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
-                </nav>
-
-                <div class="flex items-center gap-4">
-                    @auth
-                        <div class="flex items-center gap-4 border-l pl-6 border-slate-200 dark:border-slate-700">
-                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                                {{ Auth::user()->name }}
-                            </span>
-                            
-                            <form action="{{ route('logout') }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="flex items-center justify-center rounded-lg h-10 w-10 text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 transition-colors" title="Logout">
-                                    <span class="material-symbols-outlined">logout</span>
-                                </button>
-                            </form>
+   <header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between whitespace-nowrap h-16">
+                    <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+                        <div class="w-7 h-7 text-primary">
+                            <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+                            </svg>
                         </div>
-                    @else
-                        <div class="flex gap-2">
-                            <a href="{{ route('login') }}" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
-                                <span class="truncate">Login</span>
-                            </a>
+                        <h2 class="text-lg font-bold tracking-[-0.015em]">Wisata Trenggalek</h2>
+                    </div>
+
+                    <div class="hidden md:flex flex-1 justify-end gap-8">
+                        <nav class="flex items-center gap-9">
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('about') }}">Tentang</a>
+                        </nav>
+
+                        <div class="flex items-center gap-4">
+                            @auth
+                                <div class="flex items-center gap-4 border-l pl-6 border-slate-200 dark:border-slate-700">
+                                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                                        {{ Auth::user()->name }}
+                                    </span>
+                                    
+                                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="flex items-center justify-center rounded-lg h-10 w-10 text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 transition-colors" title="Logout">
+                                            <span class="material-symbols-outlined">logout</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            @else
+                                <div class="flex gap-2">
+                                    <a href="{{ route('login') }}" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                                        <span class="truncate">Login</span>
+                                    </a>
+                                </div>
+                            @endauth
                         </div>
-                    @endauth
+                    </div>
+
+                    <div class="md:hidden">
+                        <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                            <span class="material-symbols-outlined text-2xl">menu</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-
-            <div class="md:hidden">
-                <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                    <span class="material-symbols-outlined text-2xl">menu</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</header>
+        </header>
 <main class="flex-grow">
 <!-- HeroSection -->
 <section>

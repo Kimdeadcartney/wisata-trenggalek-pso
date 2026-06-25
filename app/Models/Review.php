@@ -7,11 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Review extends Model
 {
-    /**
-     * Atribut yang dapat diisi secara massal.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'user_id',
         'wisata_id',
@@ -19,11 +14,13 @@ class Review extends Model
         'rating',
     ];
 
-    /**
-     * Mendapatkan user yang memiliki review ini.
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function wisata(): BelongsTo
+    {
+        return $this->belongsTo(Wisata::class, 'wisata_id');
     }
 }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="id">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    {{-- Tambahkan CSRF Token untuk keamanan Laravel --}}
+    {{-- CSRF Token untuk keamanan Laravel --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <title>Login - Azure Compass Trenggalek</title>
@@ -93,23 +93,67 @@
 </head>
 <body class="bg-surface font-body text-on-surface min-h-screen flex flex-col">
 
-<header class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md font-['Public_Sans'] font-semibold tracking-tight docked full-width top-0 sticky z-50">
-    <div class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
-        <div class="text-xl font-black text-sky-800 dark:text-sky-200">Azure Compass</div>
-        <nav class="hidden md:flex items-center gap-8">
-            <a class="text-slate-600 dark:text-slate-400 hover:text-sky-600 transition-colors" href="{{ url('/') }}">Explore</a>
-            <a class="text-slate-600 dark:text-slate-400 hover:text-sky-600 transition-colors" href="#">Destinations</a>
-            <a class="text-slate-600 dark:text-slate-400 hover:text-sky-600 transition-colors" href="#">Packages</a>
-            <a class="text-slate-600 dark:text-slate-400 hover:text-sky-600 transition-colors" href="#">Culture</a>
-        </nav>
-        <a href="{{ route('login') }}" class="bg-primary text-on-primary px-6 py-2 rounded-lg scale-95 active:scale-90 transition-transform duration-200">Sign In</a>
+{{-- ============== HEADER (baru) ============== --}}
+<header class="sticky top-0 z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between whitespace-nowrap h-16">
+            <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+                <div class="w-7 h-7 text-primary">
+                    <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-bold tracking-[-0.015em]">Wisata Trenggalek</h2>
+            </div>
+
+            <div class="hidden md:flex flex-1 justify-end gap-8">
+                <nav class="flex items-center gap-9">
+                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
+                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
+                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
+                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('about') }}">Tentang</a>
+                </nav>
+
+                <div class="flex items-center gap-4">
+                    @auth
+                        <div class="flex items-center gap-4 border-l pl-6 border-slate-200 dark:border-slate-700">
+                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                                {{ Auth::user()->name }}
+                            </span>
+                            
+                            <form action="{{ route('logout') }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="flex items-center justify-center rounded-lg h-10 w-10 text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 transition-colors" title="Logout">
+                                    <span class="material-symbols-outlined">logout</span>
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <div class="flex gap-2">
+                            <a href="{{ route('login') }}" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                                <span class="truncate">Login</span>
+                            </a>
+                        </div>
+                    @endauth
+                </div>
+            </div>
+
+            <div class="md:hidden">
+                <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+            </div>
+        </div>
     </div>
 </header>
 
+{{-- ============== MAIN / FORM LOGIN ============== --}}
 <main class="flex-grow flex flex-col md:flex-row min-h-[calc(100vh-160px)]">
     <section class="relative w-full md:w-1/2 min-h-[400px] md:min-h-full overflow-hidden">
-        {{-- Menggunakan asset() untuk gambar lokal jika tersedia --}}
-        <img alt="Trenggalek Landscape" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgNrT8aGi-5EtTlsYbEeHBe-QWlSuvnzu9QrG2vBCm_ccgFbhIjwtOpX0p1nvVMkDPpps70x45sJSC6GnPqRWJKFEs-rg4jySgpnR0QnTvWy5IoSIFnILbzi_GKLjptvaawTeCPwcyCvIpB8F3OzQmUjdrHm-gyJyPw30jQHSNR_xrhpreh9KhQpegIMyR65gsDNr6LmbOT2hVZlJHl2UYQZi6gQY31znBrISbVzzZ62xvmlqDrD_dJP5B3_gW6kf0Jc9imHRz7g"/>
+        {{-- GANTI URL gambar di bawah ini dengan landscape Trenggalek (rekomendasi ukuran 1200x1600, portrait) --}}
+        <img alt="Trenggalek Landscape" 
+             class="absolute inset-0 w-full h-full object-cover" 
+             src="https://pesonawisata.trenggalekkab.go.id/assets/pict/maps.jpg"/>
         <div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent flex flex-col justify-end p-12 md:p-20">
             <h1 class="font-headline font-black text-5xl md:text-7xl text-white tracking-tight leading-none text-glass-shadow mb-4">
                 Discover<br/>Trenggalek
@@ -188,13 +232,53 @@
     </section>
 </main>
 
-<footer class="bg-slate-50 dark:bg-slate-950 font-['Inter'] text-sm tracking-wide w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 mt-auto">
-    <p class="text-slate-500 dark:text-slate-500">© 2026 Azure Compass Tourism. Crafted for the Digital Concierge.</p>
-    <div class="flex gap-8">
-        <a class="text-slate-500 dark:text-slate-500 hover:text-sky-600 dark:hover:text-sky-300 transition-colors underline-offset-4 hover:underline" href="#">Privacy Policy</a>
-        <a class="text-slate-500 dark:text-slate-500 hover:text-sky-600 dark:hover:text-sky-300 transition-colors underline-offset-4 hover:underline" href="#">Terms of Service</a>
-        <a class="text-slate-500 dark:text-slate-500 hover:text-sky-600 dark:hover:text-sky-300 transition-colors underline-offset-4 hover:underline" href="#">Local Guides</a>
-        <a class="text-slate-500 dark:text-slate-500 hover:text-sky-600 dark:hover:text-sky-300 transition-colors underline-offset-4 hover:underline" href="#">Contact</a>
+{{-- ============== FOOTER ============== --}}
+<footer class="bg-slate-900 text-white">
+    <div class="container mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-7 h-7 text-white">
+                        <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold">Wisata Trenggalek</h3>
+                </div>
+                <p class="text-slate-400 text-sm">Portal informasi pariwisata resmi Kabupaten Trenggalek, membantu Anda menemukan pesona tersembunyi dengan rekomendasi cerdas berbasis algoritma PSO.</p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">Tautan Cepat</h4>
+                <ul class="space-y-2">
+                    <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a></li>
+                    <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a></li>
+                    <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('about') }}">Tentang</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">Kontak</h4>
+                <ul class="space-y-2 text-slate-400 text-sm">
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-lg mt-0.5">location_on</span>
+                        <span>Dinas Pariwisata Trenggalek, Jawa Timur</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">mail</span>
+                        <a class="hover:text-white transition-colors" href="mailto:info@trenggalektourism.go.id">info@trenggalektourism.go.id</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
+            <p>© {{ date('Y') }} Sistem Informasi Pariwisata Kabupaten Trenggalek. Hak Cipta Dilindungi.</p>
+            <div class="flex items-center gap-2">
+                <span class="text-[10px] uppercase tracking-widest bg-slate-800 px-3 py-1 rounded-full text-slate-400 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[12px]">bolt</span>
+                    Powered by PSO Algorithm
+                </span>
+            </div>
+        </div>
     </div>
 </footer>
 

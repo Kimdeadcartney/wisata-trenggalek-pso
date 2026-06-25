@@ -99,14 +99,48 @@
                 </div>
             </div>
 
-            <div class="md:hidden">
-                <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                    <span class="material-symbols-outlined text-2xl">menu</span>
-                </button>
-            </div>
+           <div class="md:hidden">
+    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+        <span id="mobile-menu-icon" class="material-symbols-outlined text-2xl">menu</span>
+    </button>
+</div>
         </div>
     </div>
 </header>
+<!-- Mobile Menu Dropdown -->
+<div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-lg sticky top-16 z-40">
+    <nav class="container mx-auto px-4 py-3 flex flex-col">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">home</span> Home
+        </a>
+        <a href="{{ route('destinasi.index') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">explore</span> Destinasi
+        </a>
+        <a href="{{ route('rekomendasi.pso') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">bolt</span> Rekomendasi Cerdas
+        </a>
+        <a href="{{ route('about') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">info</span> Tentang
+        </a>
+        <div class="pt-3 pb-1">
+            @auth
+                <div class="flex items-center justify-between px-2 py-2">
+                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">{{ Auth::user()->name }}</span>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="flex items-center gap-1 text-red-500 text-sm font-medium">
+                            <span class="material-symbols-outlined text-xl">logout</span> Logout
+                        </button>
+                    </form>
+                </div>
+            @else
+                <a href="{{ route('login') }}" class="flex w-full items-center justify-center rounded-lg h-11 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                    Login
+                </a>
+            @endauth
+        </div>
+    </nav>
+</div>
 
                     <main class="flex-1 py-10 px-4">
                         <div class="flex flex-col gap-3 p-4 mb-6">
@@ -270,5 +304,18 @@
             }
         });
     </script>
+    <script>
+    function toggleMobileMenu() {
+        var menu = document.getElementById('mobile-menu');
+        var icon = document.getElementById('mobile-menu-icon');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            icon.textContent = 'close';
+        } else {
+            menu.classList.add('hidden');
+            icon.textContent = 'menu';
+        }
+    }
+</script>
 </body>
 </html>

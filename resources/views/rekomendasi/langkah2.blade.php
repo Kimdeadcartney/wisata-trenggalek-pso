@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Rekomendasi PSO Trenggalek</title>
+    <title>Rekomendasi PSO Trenggalek - Langkah 2</title>
     
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -62,57 +62,90 @@
                 <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
                     
                     <header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
-    <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between whitespace-nowrap h-16">
-            <div class="flex items-center gap-4 text-slate-900 dark:text-white">
-                <div class="w-7 h-7 text-primary">
-                    <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
-                    </svg>
-                </div>
-                <h2 class="text-lg font-bold tracking-[-0.015em]">Wisata Trenggalek</h2>
-            </div>
+                        <div class="container mx-auto px-4">
+                            <div class="flex items-center justify-between whitespace-nowrap h-16">
+                                <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+                                    <div class="w-7 h-7 text-primary">
+                                        <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                    <h2 class="text-lg font-bold tracking-[-0.015em]">Wisata Trenggalek</h2>
+                                </div>
 
-            <div class="hidden md:flex flex-1 justify-end gap-8">
-                <nav class="flex items-center gap-9">
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
-                </nav>
+                                <div class="hidden md:flex flex-1 justify-end gap-8">
+                                    <nav class="flex items-center gap-9">
+                                        <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
+                                        <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
+                                        <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
+                                    </nav>
 
-                <div class="flex items-center gap-4">
-                    @auth
-                        <div class="flex items-center gap-4 border-l pl-6 border-slate-200 dark:border-slate-700">
-                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                                {{ Auth::user()->name }}
-                            </span>
-                            
-                            <form action="{{ route('logout') }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="flex items-center justify-center rounded-lg h-10 w-10 text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 transition-colors" title="Logout">
-                                    <span class="material-symbols-outlined">logout</span>
-                                </button>
-                            </form>
+                                    <div class="flex items-center gap-4">
+                                        @auth
+                                            <div class="flex items-center gap-4 border-l pl-6 border-slate-200 dark:border-slate-700">
+                                                <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                                                    {{ Auth::user()->name }}
+                                                </span>
+                                                
+                                                <form action="{{ route('logout') }}" method="POST" class="inline">
+                                                    @csrf
+                                                    <button type="submit" class="flex items-center justify-center rounded-lg h-10 w-10 text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 transition-colors" title="Logout">
+                                                        <span class="material-symbols-outlined">logout</span>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @else
+                                            <div class="flex gap-2">
+                                                <a href="{{ route('login') }}" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                                                    <span class="truncate">Login</span>
+                                                </a>
+                                            </div>
+                                        @endauth
+                                    </div>
+                                </div>
+
+                              <div class="md:hidden">
+    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+        <span id="mobile-menu-icon" class="material-symbols-outlined text-2xl">menu</span>
+    </button>
+</div>
+                            </div>
                         </div>
-                    @else
-                        <div class="flex gap-2">
-                            <a href="{{ route('login') }}" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
-                                <span class="truncate">Login</span>
-                            </a>
-                        </div>
-                    @endauth
+                    </header>
+<!-- Mobile Menu Dropdown -->
+<div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-lg sticky top-16 z-40">
+    <nav class="container mx-auto px-4 py-3 flex flex-col">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">home</span> Home
+        </a>
+        <a href="{{ route('destinasi.index') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">explore</span> Destinasi
+        </a>
+        <a href="{{ route('rekomendasi.pso') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">bolt</span> Rekomendasi Cerdas
+        </a>
+        <a href="{{ route('about') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">info</span> Tentang
+        </a>
+        <div class="pt-3 pb-1">
+            @auth
+                <div class="flex items-center justify-between px-2 py-2">
+                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">{{ Auth::user()->name }}</span>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="flex items-center gap-1 text-red-500 text-sm font-medium">
+                            <span class="material-symbols-outlined text-xl">logout</span> Logout
+                        </button>
+                    </form>
                 </div>
-            </div>
-
-            <div class="md:hidden">
-                <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                    <span class="material-symbols-outlined text-2xl">menu</span>
-                </button>
-            </div>
+            @else
+                <a href="{{ route('login') }}" class="flex w-full items-center justify-center rounded-lg h-11 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                    Login
+                </a>
+            @endauth
         </div>
-    </div>
-</header>
-
+    </nav>
+</div>
                     <main class="flex-1 py-10 px-4">
                         <div class="flex flex-wrap justify-between gap-3 p-4 mb-6">
                             <div class="flex min-w-72 flex-col gap-3">
@@ -144,10 +177,9 @@
                         <form action="{{ route('rekomendasi.simpanLangkah2') }}" method="POST" class="space-y-8">
                             @csrf
                             {{-- Input Hidden untuk Akurasi Jarak --}}
-                            <input type="hidden" name="latitude" id="lat_hidden" value="-8.0581">
-                            <input type="hidden" name="longitude" id="lng_hidden" value="111.7118">
-                            {{-- Input Hidden untuk Nama Wilayah agar tersimpan ke session --}}
-                            <input type="hidden" name="nama_lokasi_user" id="nama_lokasi_hidden" value="Trenggalek">
+                            <input type="hidden" name="latitude" id="lat_hidden" value="{{ old('latitude', '-8.0581') }}">
+                            <input type="hidden" name="longitude" id="lng_hidden" value="{{ old('longitude', '111.7118') }}">
+                            <input type="hidden" name="nama_lokasi_user" id="nama_lokasi_hidden" value="{{ old('nama_lokasi_user', 'Trenggalek') }}">
 
                             <div class="bg-white dark:bg-background-dark dark:border dark:border-gray-700/50 p-6 rounded-xl shadow-sm">
                                 <div class="space-y-12 px-4 py-4">
@@ -174,7 +206,7 @@
                                             </div>
                                             <div class="relative group">
                                                 <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400">map</span>
-                                                <input name="location" id="location_display" value="{{ old('location') }}" class="w-full pl-10 pr-4 py-3 rounded-lg border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 focus:border-primary focus:ring-primary text-sm" placeholder="Masukkan nama kota atau koordinat..." type="text" required/>
+                                                <input name="location" id="location_display" value="{{ old('location', 'Trenggalek') }}" class="w-full pl-10 pr-4 py-3 rounded-lg border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 focus:border-primary focus:ring-primary text-sm" placeholder="Masukkan nama kota atau koordinat..." type="text" required/>
                                             </div>
                                         </div>
                                     </div>
@@ -264,12 +296,12 @@
             const locDisplay = document.getElementById('location_display');
             const namaLokasiHidden = document.getElementById('nama_lokasi_hidden');
 
+            // Fungsi Reverse Geocoding untuk mendapatkan nama wilayah dari koordinat
             async function getPlaceName(lat, lng) {
                 try {
                     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
                     const data = await response.json();
                     
-                    // Ekstraksi Kota dan Kecamatan
                     const address = data.address;
                     const kecamatan = address.suburb || address.village || address.district || address.town || "";
                     const kota = address.city || address.regency || address.county || "";
@@ -280,6 +312,7 @@
                 }
             }
 
+            // Fungsi saat Geolokasi Berhasil
             async function handleSuccess(position) {
                 const lat = position.coords.latitude;
                 const lng = position.coords.longitude;
@@ -287,36 +320,59 @@
                 latHidden.value = lat;
                 lngHidden.value = lng;
 
-                // Tampilkan loading sebentar sambil geocoding
                 locDisplay.value = "Menganalisis wilayah...";
                 
                 const wilayah = await getPlaceName(lat, lng);
                 
                 locDisplay.value = `📍 ${wilayah}`;
-                namaLokasiHidden.value = wilayah; // Masukkan nama wilayah ke hidden input
+                namaLokasiHidden.value = wilayah; // Masukkan ke hidden input untuk backend
                 
                 btnGeo.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Lokasi Terkunci';
-                btnGeo.classList.replace('text-primary', 'text-green-600');
+                btnGeo.classList.remove('text-primary', 'bg-primary/5');
+                btnGeo.classList.add('text-green-600', 'bg-green-50', 'border-green-200');
             }
 
+            // Meminta izin lokasi otomatis saat halaman dimuat (Opsional)
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(handleSuccess, (err) => {
-                    console.log("Menunggu klik GPS atau input manual");
+                    console.log("Menunggu interaksi user untuk GPS");
                 });
             }
 
+            // Event Listener Tombol GPS
             btnGeo.addEventListener('click', function() {
                 if (navigator.geolocation) {
                     this.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Mencari Wilayah...';
                     navigator.geolocation.getCurrentPosition(handleSuccess, (error) => {
-                        alert("Gagal mengakses lokasi. Pastikan izin GPS aktif.");
+                        let msg = "Gagal mengakses lokasi.";
+                        if(error.code === 1) msg = "Izin lokasi ditolak. Harap aktifkan izin GPS di browser.";
+                        alert(msg);
                         this.innerHTML = '<span class="material-symbols-outlined">gps_fixed</span> Gunakan Lokasi Saat Ini';
                     });
                 } else {
                     alert("Browser Anda tidak mendukung fitur lokasi.");
                 }
             });
+
+            // Update nama_lokasi_hidden jika user mengetik manual di input display
+            locDisplay.addEventListener('input', function() {
+                namaLokasiHidden.value = this.value;
+            });
         });
+        
     </script>
+    <script>
+    function toggleMobileMenu() {
+        var menu = document.getElementById('mobile-menu');
+        var icon = document.getElementById('mobile-menu-icon');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            icon.textContent = 'close';
+        } else {
+            menu.classList.add('hidden');
+            icon.textContent = 'menu';
+        }
+    }
+</script>
 </body>
 </html>

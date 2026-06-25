@@ -60,56 +60,92 @@
 <body class="bg-surface font-body text-slate-900">
 
   <header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
-    <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between whitespace-nowrap h-16">
-            <div class="flex items-center gap-4 text-slate-900 dark:text-white">
-                <div class="w-7 h-7 text-primary">
-                    <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
-                    </svg>
-                </div>
-                <h2 class="text-lg font-bold tracking-[-0.015em]">Wisata Trenggalek</h2>
-            </div>
-
-            <div class="hidden md:flex flex-1 justify-end gap-8">
-                <nav class="flex items-center gap-9">
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
-                    <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
-                </nav>
-
-                <div class="flex items-center gap-4">
-                    @auth
-                        <div class="flex items-center gap-4 border-l pl-6 border-slate-200 dark:border-slate-700">
-                            <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                                {{ Auth::user()->name }}
-                            </span>
-                            
-                            <form action="{{ route('logout') }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="flex items-center justify-center rounded-lg h-10 w-10 text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 transition-colors" title="Logout">
-                                    <span class="material-symbols-outlined">logout</span>
-                                </button>
-                            </form>
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between whitespace-nowrap h-16">
+                    <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+                        <div class="w-7 h-7 text-primary">
+                            <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+                            </svg>
                         </div>
-                    @else
-                        <div class="flex gap-2">
-                            <a href="{{ route('login') }}" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
-                                <span class="truncate">Login</span>
-                            </a>
+                        <h2 class="text-lg font-bold tracking-[-0.015em]">Wisata Trenggalek</h2>
+                    </div>
+
+                    <div class="hidden md:flex flex-1 justify-end gap-8">
+                        <nav class="flex items-center gap-9">
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
+                            <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('about') }}">Tentang</a>
+                        </nav>
+
+                        <div class="flex items-center gap-4">
+                            @auth
+                                <div class="flex items-center gap-4 border-l pl-6 border-slate-200 dark:border-slate-700">
+                                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                                        {{ Auth::user()->name }}
+                                    </span>
+                                    
+                                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="flex items-center justify-center rounded-lg h-10 w-10 text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 transition-colors" title="Logout">
+                                            <span class="material-symbols-outlined">logout</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            @else
+                                <div class="flex gap-2">
+                                    <a href="{{ route('login') }}" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                                        <span class="truncate">Login</span>
+                                    </a>
+                                </div>
+                            @endauth
                         </div>
-                    @endauth
+                    </div>
+
+                   <div class="md:hidden">
+    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+        <span id="mobile-menu-icon" class="material-symbols-outlined text-2xl">menu</span>
+    </button>
+</div>
                 </div>
             </div>
-
-            <div class="md:hidden">
-                <button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                    <span class="material-symbols-outlined text-2xl">menu</span>
-                </button>
-            </div>
+        </header>
+        <!-- Mobile Menu Dropdown -->
+<div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-lg sticky top-16 z-40">
+    <nav class="container mx-auto px-4 py-3 flex flex-col">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">home</span> Home
+        </a>
+        <a href="{{ route('destinasi.index') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">explore</span> Destinasi
+        </a>
+        <a href="{{ route('rekomendasi.pso') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">bolt</span> Rekomendasi Cerdas
+        </a>
+        <a href="{{ route('about') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">info</span> Tentang
+        </a>
+        <div class="pt-3 pb-1">
+            @auth
+                <div class="flex items-center justify-between px-2 py-2">
+                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">{{ Auth::user()->name }}</span>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="flex items-center gap-1 text-red-500 text-sm font-medium">
+                            <span class="material-symbols-outlined text-xl">logout</span> Logout
+                        </button>
+                    </form>
+                </div>
+            @else
+                <a href="{{ route('login') }}" class="flex w-full items-center justify-center rounded-lg h-11 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                    Login
+                </a>
+            @endauth
         </div>
-    </div>
-</header>
+    </nav>
+</div>
+
 <main>
     <section class="relative h-[700px] w-full overflow-hidden bg-slate-900">
         <img class="w-full h-full object-cover opacity-80" src="{{ asset($destinasi->gambar) }}" alt="{{ $destinasi->nama }}"/>
@@ -154,6 +190,7 @@
                                 @elseif(Str::contains($f, ['foto', 'spot'])) photo_camera
                                 @elseif(Str::contains($f, ['camp', 'tenda'])) camping
                                 @elseif(Str::contains($f, ['sunrise', 'matahari'])) light_mode
+                                @elseif(Str::contains($f, ['adat', 'budaya', 'upacara', 'festival'])) festival
                                 @else check_circle @endif
                             </span>
                             <span class="font-label font-semibold text-on-surface">{{ trim($item) }}</span>
@@ -240,12 +277,21 @@
                     <h3 class="font-headline text-2xl font-bold mb-8 text-primary">Practical Info</h3>
                     <div class="space-y-8">
                         <div class="flex items-start gap-4">
-                            <span class="material-symbols-outlined text-secondary">schedule</span>
-                            <div>
-                                <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Opening Hours</p>
-                                <p class="font-semibold text-slate-800">Open 24 Hours</p>
-                                <p class="text-xs text-zinc-500">Best time: 05:30 - 17:30</p>
-                            </div>
+                            @if($destinasi->kategori == 'Budaya')
+                                <span class="material-symbols-outlined text-secondary">calendar_month</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Event Date</p>
+                                    <p class="font-semibold text-slate-800">{{ $destinasi->tanggal_pelaksanaan ?? 'Menunggu Jadwal' }}</p>
+                                    <p class="text-xs text-zinc-500">Berdasarkan kalender adat</p>
+                                </div>
+                            @else
+                                <span class="material-symbols-outlined text-secondary">schedule</span>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Opening Hours</p>
+                                    <p class="font-semibold text-slate-800">{{ $destinasi->jam_buka && $destinasi->jam_tutup ? $destinasi->jam_buka . ' - ' . $destinasi->jam_tutup : 'Buka 24 Jam' }}</p>
+                                    <p class="text-xs text-zinc-500">Best time: 05:30 - 17:30</p>
+                                </div>
+                            @endif
                         </div>
                         <div class="flex items-start gap-4">
                             <span class="material-symbols-outlined text-secondary">payments</span>
@@ -259,7 +305,7 @@
                             <span class="material-symbols-outlined text-secondary">call</span>
                             <div>
                                 <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Contact Center</p>
-                                <p class="font-semibold text-slate-800">+62 812-3456-7890</p>
+                                <p class="font-semibold text-slate-800">-</p>
                                 <p class="text-xs text-zinc-500">Official Inquiry</p>
                             </div>
                         </div>
@@ -300,67 +346,91 @@
             </div>
             
             <div class="flex overflow-x-auto gap-8 pb-8 hide-scrollbar">
-                @foreach($destinasiLain as $lain)
-                <a href="{{ route('destinasi.show', $lain->id) }}" class="min-w-[320px] md:min-w-[400px] group cursor-pointer block">
-                    <div class="h-64 rounded-xxl overflow-hidden mb-6 shadow-sm relative">
-                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset($lain->gambar) }}" alt="{{ $lain->nama }}"/>
-                        <div class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary">
-                            {{ number_format($lain->rating, 1) }} ★
-                        </div>
-                    </div>
-                    <h4 class="font-headline text-xl font-bold group-hover:text-primary transition-colors">{{ $lain->nama }}</h4>
-                    <p class="text-on-surface-variant font-label text-sm flex items-center gap-1 mt-2">
-                        <span class="material-symbols-outlined text-[16px]">location_on</span>
-                        {{ $lain->kecamatan }}
-                    </p>
-                </a>
-                @endforeach
+              @foreach($destinasiLain as $lain)
+<a href="{{ route('destinasi.show', $lain->id) }}" class="min-w-[320px] md:min-w-[400px] group cursor-pointer block">
+    <div class="h-64 rounded-3xl overflow-hidden mb-6 shadow-sm relative">
+        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+             src="{{ Str::startsWith($lain->gambar, ['http', 'https']) ? $lain->gambar : asset($lain->gambar) }}" 
+             alt="{{ $lain->nama }}"
+             onerror="this.src='https://placehold.co/600x400?text=Wisata+Trenggalek'"/>
+        
+        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary shadow-sm">
+            {{ number_format($lain->rating, 1) }} ★
+        </div>
+    </div>
+    
+    <h4 class="font-headline text-xl font-bold group-hover:text-primary transition-colors">{{ $lain->nama }}</h4>
+    <p class="text-gray-500 font-label text-sm flex items-center gap-1 mt-2">
+        <span class="material-symbols-outlined text-[18px]">location_on</span>
+        {{ $lain->kecamatan }}, Trenggalek
+    </p>
+</a>
+@endforeach
             </div>
         </div>
     </section>
 </main>
 
-<footer class="bg-slate-900 py-20 px-8 text-white">
-    <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div class="col-span-1 md:col-span-2 space-y-6">
-                <div class="text-3xl font-black text-blue-400 font-headline tracking-tighter">Wisata Trenggalek</div>
-                <p class="text-slate-400 text-base max-w-sm leading-relaxed">
-                    Menyajikan keindahan alam dan pengalaman autentik di selatan Jawa Timur untuk para penjelajah modern dari seluruh dunia.
-                </p>
-                <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors">
-                        <span class="material-symbols-outlined text-sm">share</span>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors">
-                        <span class="material-symbols-outlined text-sm">public</span>
-                    </a>
+  <footer class="bg-slate-900 text-white">
+            <div class="container mx-auto px-4 py-16">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="col-span-1 md:col-span-2">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-7 h-7 text-white">
+                                <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold">Wisata Trenggalek</h3>
+                        </div>
+                        <p class="text-slate-400 text-sm">Portal informasi pariwisata resmi Kabupaten Trenggalek, membantu Anda menemukan pesona tersembunyi dengan rekomendasi cerdas berbasis algoritma PSO.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Tautan Cepat</h4>
+                        <ul class="space-y-2">
+                            <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a></li>
+                            <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a></li>
+                            <li><a class="text-slate-400 hover:text-white text-sm transition-colors" href="{{ route('about') }}">Tentang</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Kontak</h4>
+                        <ul class="space-y-2 text-slate-400 text-sm">
+                            <li class="flex items-start gap-2">
+                                <span class="material-symbols-outlined text-lg mt-0.5">location_on</span>
+                                <span>Dinas Pariwisata Trenggalek, Jawa Timur</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-lg">mail</span>
+                                <a class="hover:text-white transition-colors" href="mailto:info@trenggalektourism.go.id">info@trenggalektourism.go.id</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
+                    <p>© {{ date('Y') }} Sistem Informasi Pariwisata Kabupaten Trenggalek. Hak Cipta Dilindungi.</p>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] uppercase tracking-widest bg-slate-800 px-3 py-1 rounded-full text-slate-400 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[12px]">bolt</span>
+                            Powered by PSO Algorithm
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-lg">Quick Links</h4>
-                <div class="flex flex-col gap-4 text-slate-400">
-                    <a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a>
-                    <a href="{{ route('destinasi.index') }}" class="hover:text-white transition-colors">Destinations</a>
-                    <a href="{{ route('rekomendasi.langkah1') }}" class="hover:text-white transition-colors">Smart Recommendations</a>
-                    <a href="#" class="hover:text-white transition-colors">About Us</a>
-                </div>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-lg">Legal</h4>
-                <div class="flex flex-col gap-4 text-slate-400">
-                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                    <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
-                </div>
-            </div>
-        </div>
-        <div class="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-slate-500 text-sm">© 2026 Wisata Trenggalek. All rights reserved.</p>
-            <p class="text-slate-600 text-xs tracking-widest uppercase">Made for Trenggalek Tourism</p>
-        </div>
-    </div>
-</footer>
-
+        </footer>
+        <script>
+    function toggleMobileMenu() {
+        var menu = document.getElementById('mobile-menu');
+        var icon = document.getElementById('mobile-menu-icon');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            icon.textContent = 'close';
+        } else {
+            menu.classList.add('hidden');
+            icon.textContent = 'menu';
+        }
+    }
+</script>
 </body>
 </html>

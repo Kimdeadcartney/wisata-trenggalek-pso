@@ -27,6 +27,7 @@ class Destinasi extends Model
         'rating',
         'harga_tiket', 
         'total_reviews',
+        'tanggal_pelaksanaan',
         'latitude',
         'longitude',
         'fasilitas'

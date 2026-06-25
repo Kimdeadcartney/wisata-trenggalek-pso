@@ -4,37 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany; // Tambahkan ini
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Wisata extends Model
 {
     use HasFactory;
 
-    /**
-     * Nama tabel database
-     */
     protected $table = 'wisatas';
 
-    /**
-     * Field yang boleh diisi mass assignment
-     */
     protected $fillable = [
         'nama',
         'kategori',
+        'kecamatan',
         'harga_tiket',
         'latitude',
         'longitude',
         'jarak_dari_pusat',
         'rating',
+        'jam_buka',
+        'jam_tutup',
+        'tanggal_pelaksanaan',
         'fasilitas',
         'hotel_terdekat',
         'gambar',
         'deskripsi',
     ];
 
-    /**
-     * Konversi otomatis tipe data
-     */
     protected $casts = [
         'latitude' => 'double',
         'longitude' => 'double',
@@ -43,18 +38,11 @@ class Wisata extends Model
         'jarak_dari_pusat' => 'float',
     ];
 
-    /**
-     * RELASI: Satu wisata memiliki banyak review
-     * Ini yang memperbaiki error "null given" di foreach Blade
-     */
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class, 'wisata_id');
     }
 
-    /**
-     * Ubah fasilitas string menjadi array
-     */
     public function getFasilitasArrayAttribute()
     {
         return $this->fasilitas
@@ -62,9 +50,6 @@ class Wisata extends Model
             : [];
     }
 
-    /**
-     * Ubah hotel terdekat string menjadi array
-     */
     public function getHotelArrayAttribute()
     {
         return $this->hotel_terdekat
@@ -72,17 +57,11 @@ class Wisata extends Model
             : [];
     }
 
-    /**
-     * Cek apakah kategori adalah hotel
-     */
     public function isHotel()
     {
         return strtolower($this->kategori) === 'hotel';
     }
 
-    /**
-     * Cek apakah lokasi gratis
-     */
     public function isGratis()
     {
         return $this->harga_tiket <= 0;
