@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
 # Install PHP extensions
 RUN apt-get update && apt-get install -y \
@@ -15,7 +15,6 @@ RUN apt-get update && apt-get install -y \
     pdo \
     pdo_mysql \
     mbstring \
-    xml \
     gd \
     bcmath \
     opcache
@@ -35,17 +34,6 @@ RUN composer install --optimize-autoloader --no-dev --no-interaction
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Apache config untuk Laravel
-RUN echo '<VirtualHost *:80>\n\
-    DocumentRoot /var/www/html/public\n\
-    <Directory /var/www/html/public>\n\
-        AllowOverride All\n\
-        Require all granted\n\
-    </Directory>\n\
-</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+EXPOSE 8000
 
-RUN a2dismod mpm_event && a2enmod mpm_prefork rewrite
-
-EXPOSE 80
-
-CMD ["apache2-foreground"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
