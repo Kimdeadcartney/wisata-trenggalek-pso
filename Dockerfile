@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libpng-dev \
     libxml2-dev \
+    libonig-dev \
     curl \
     unzip \
     && docker-php-ext-install \
