@@ -75,6 +75,14 @@
                             <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('destinasi.index') }}">Destinasi</a>
                             <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('rekomendasi.pso') }}">Rekomendasi Cerdas</a>
                             <a class="text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors" href="{{ route('about') }}">Tentang</a>
+                            @if(session()->has('pso_results') && session('pso_results') !== null && count(session('pso_results')) > 0)
+                            <a href="{{ route('rekomendasi.hasil') }}"
+                               class="flex items-center gap-1.5 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-primary/90 transition-all">
+                                <span class="material-symbols-outlined text-sm">route</span>
+                                Rute Saya
+                                <span class="bg-white text-primary text-[10px] font-black px-1.5 py-0.5 rounded-full leading-none">{{ count(session('pso_results')) }}</span>
+                            </a>
+                            @endif
                         </nav>
 
                         <div class="flex items-center gap-4">
@@ -124,6 +132,13 @@
         <a href="{{ route('about') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
             <span class="material-symbols-outlined text-xl">info</span> Tentang
         </a>
+        @if(session()->has('pso_results') && session('pso_results') !== null && count(session('pso_results')) > 0)
+        <a href="{{ route('rekomendasi.hasil') }}" class="flex items-center gap-3 py-3 px-2 text-sm font-bold text-primary border-b border-slate-100 dark:border-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-xl">route</span>
+            Rute Saya
+            <span class="ml-auto bg-primary text-white text-[10px] font-black px-2 py-0.5 rounded-full">{{ count(session('pso_results')) }}</span>
+        </a>
+        @endif
         <div class="pt-3 pb-1">
             @auth
                 <div class="flex items-center justify-between px-2 py-2">
@@ -324,5 +339,41 @@
         }
     }
 </script>
+
+{{-- ── FLOATING BANNER: Lihat Rute PSO jika ada hasil aktif ── --}}
+@if(session()->has('pso_results') && session('pso_results') !== null && count(session('pso_results')) > 0)
+<div id="pso-float-banner"
+     style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999;width:max-content;max-width:calc(100vw - 32px);"
+     class="animate-bounce-slow">
+    <div class="flex items-center gap-3 bg-[#111318] text-white pl-4 pr-2 py-2.5 rounded-2xl shadow-2xl border border-white/10 backdrop-blur-md">
+        <div class="size-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-white text-base" style="font-variation-settings:'FILL' 1">route</span>
+        </div>
+        <div class="leading-tight">
+            <p class="text-xs font-bold text-white">Rute PSO Aktif</p>
+            <p class="text-[11px] text-gray-400">
+                {{ count(session('pso_results')) }} destinasi &middot; {{ session('pso_data.location', 'Lokasi Anda') }}
+            </p>
+        </div>
+        <a href="{{ route('rekomendasi.hasil') }}"
+           class="ml-2 flex items-center gap-1.5 bg-primary hover:bg-primary/90 transition text-white text-xs font-bold px-3 py-2 rounded-xl whitespace-nowrap">
+            <span class="material-symbols-outlined text-sm">map</span>
+            Lihat Rute
+        </a>
+        <button onclick="document.getElementById('pso-float-banner').style.display='none'"
+                class="ml-1 size-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition flex-shrink-0"
+                title="Tutup">
+            <span class="material-symbols-outlined text-gray-400 text-sm">close</span>
+        </button>
+    </div>
+</div>
+<style>
+@keyframes bounce-slow {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+}
+.animate-bounce-slow { animation: bounce-slow 3s ease-in-out infinite; }
+</style>
+@endif
 </body>
 </html>

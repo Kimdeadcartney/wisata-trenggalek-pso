@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Wisata;
 use App\Services\NearestNeighborService;
+use App\Services\PsoStorageService;
 
 class RekomendasiController extends Controller
 {
@@ -109,6 +110,9 @@ class RekomendasiController extends Controller
 
         session()->put('pso_data', $request->only('categories'));
         session()->forget(['pso_results', 'pso_rute', 'pso_meta']);
+
+        // Hapus data tersimpan di DB saat user memulai ulang (Reset Rute)
+        PsoStorageService::clear();
 
         return redirect()->route('rekomendasi.langkah2');
     }
@@ -506,6 +510,14 @@ $komparasi = $nn->komparasi(
         session()->put('pso_rute',    $hasilRute);
         session()->put('pso_meta',    $psoMeta);
 
+        // Simpan ke database agar data tetap ada walaupun user pindah halaman
+        PsoStorageService::save(
+            session('pso_data', []),
+            $hasilRekomendasi,
+            $hasilRute,
+            $psoMeta
+        );
+
         return redirect()->route('rekomendasi.loading');
     }
 
@@ -763,6 +775,16 @@ $komparasi = $nn->komparasi(
     $pso_data = session('pso_data');
     $pso_meta = session('pso_meta');
 
+    // Jika session kosong (expired / pindah halaman), coba restore dari database
+    if ($results === null) {
+        if (PsoStorageService::restoreToSession()) {
+            $results  = session('pso_results');
+            $pso_rute = session('pso_rute');
+            $pso_data = session('pso_data');
+            $pso_meta = session('pso_meta');
+        }
+    }
+
     if ($results === null) {
         return redirect()->route('rekomendasi.langkah1');
     }
@@ -903,6 +925,14 @@ $komparasi = $nn->komparasi(
         // Perbarui session
         session()->put('pso_results', $hasilRekomendasi);
         session()->put('pso_rute',    $hasilRute);
+
+        // Perbarui penyimpanan permanen di database
+        PsoStorageService::save(
+            session('pso_data', []),
+            $hasilRekomendasi,
+            $hasilRute,
+            session('pso_meta', [])
+        );
 
         return redirect()->route('rekomendasi.hasil');
     }

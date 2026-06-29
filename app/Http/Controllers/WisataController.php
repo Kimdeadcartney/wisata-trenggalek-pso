@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destinasi;
+use App\Services\PsoStorageService;
 use Illuminate\Http\Request;
 
 class WisataController extends Controller
@@ -29,16 +30,25 @@ class WisataController extends Controller
             $query->whereIn('kategori', (array)$request->kategori);
         }
 
-        // 4. Fitur Filter Kecamatan (DIUBAH agar menangkap input 'lokasi')
+        // 4. Fitur Filter Kecamatan
         if ($request->has('lokasi') && !empty($request->lokasi)) {
-            // Kita mengambil input 'lokasi' dari Blade, lalu mencocokkan ke kolom 'kecamatan' di DB
             $query->whereIn('kecamatan', (array)$request->lokasi);
         }
 
         // 5. Eksekusi Query berdasarkan Route
         if ($request->routeIs('home')) {
-            // TAMPILKAN 5 SAJA & BERUBAH-UBAH (RANDOM)
-            $wisata = $query->inRandomOrder()->take(5)->get(); 
+            $wisata = $query->inRandomOrder()->take(5)->get();
+
+            // Jika session PSO kosong (expired), coba restore dari database
+            // supaya banner "Rute Saya" tetap muncul di home
+            $hasPso = session()->has('pso_results')
+                   && session('pso_results') !== null
+                   && count(session('pso_results')) > 0;
+
+            if (!$hasPso) {
+                PsoStorageService::restoreToSession();
+            }
+
             return view('welcome', compact('wisata'));
         }
 
@@ -56,13 +66,12 @@ class WisataController extends Controller
                 break;
             case 'popularitas':
             default:
-                $query->orderBy('reviews_count', 'desc'); 
+                $query->orderBy('reviews_count', 'desc');
                 break;
         }
 
-        // Menggunakan appends agar filter tidak hilang saat pindah halaman (pagination)
         $wisata = $query->paginate(9)->appends($request->all());
-        
+
         return view('destinasi.destinasi', compact('wisata'));
     }
 
@@ -72,7 +81,7 @@ class WisataController extends Controller
     public function show($id)
     {
         $destinasi = Destinasi::with(['reviews.user'])->findOrFail($id);
-        
+
         $destinasiLain = Destinasi::where('id', '!=', $id)
             ->where('kecamatan', $destinasi->kecamatan)
             ->limit(4)
@@ -90,15 +99,8 @@ class WisataController extends Controller
      */
     public function about()
     {
-        // Ambil data budaya dari kategori "Budaya" - maksimal 3 item
-        $budaya = Destinasi::where('kategori', 'Budaya')
-            ->limit(3)
-            ->get();
-        
-        // Ambil data kuliner dari kategori "Kuliner" - maksimal 3 item
-        $kuliner = Destinasi::where('kategori', 'Kuliner')
-            ->limit(3)
-            ->get();
+        $budaya = Destinasi::where('kategori', 'Budaya')->limit(3)->get();
+        $kuliner = Destinasi::where('kategori', 'Kuliner')->limit(3)->get();
 
         return view('about', compact('budaya', 'kuliner'));
     }
